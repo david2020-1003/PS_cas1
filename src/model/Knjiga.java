@@ -9,11 +9,24 @@ package model;
  * @author PC
  */
 public class Knjiga {
+    private int id;
     private String naslov;
     private Autor autor;
     private String ISBN;  //uvek ide u String jer nekad premasi velicinu inta
     private int godinaIzdanja;
     private Zanr zanr;
+
+    public Knjiga(int id, String naslov, Autor autor, String ISBN, int godinaIzdanja, Zanr zanr) {
+        this.id = id;
+        this.naslov = naslov;
+        this.autor = autor;
+        this.ISBN = ISBN;
+        this.godinaIzdanja = godinaIzdanja;
+        this.zanr = zanr;
+    }
+    
+    
+    
 
     public Knjiga() {
     }
@@ -70,6 +83,14 @@ public class Knjiga {
     @Override
     public String toString() {
         return "Knjiga{" + "naslov=" + naslov + ", autor=" + autor + ", ISBN=" + ISBN + ", godinaIzdanja=" + godinaIzdanja + '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     

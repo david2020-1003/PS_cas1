@@ -7,6 +7,7 @@ package forme;
 
 import controller.Controller;
 import java.util.List;
+import java.util.Random;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import model.Autor;
@@ -77,6 +78,12 @@ public class FormaKnjiga extends javax.swing.JDialog {
         jLabel2.setText("ISBN");
 
         jLabel3.setText("Autor");
+
+        jComboBoxAutori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAutoriActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Godina Izdanja");
 
@@ -188,8 +195,10 @@ public class FormaKnjiga extends javax.swing.JDialog {
         Zanr zanr = (Zanr) jComboBoxZanr.getSelectedItem();
         Autor odabraniAutor = (Autor) jComboBoxAutori.getSelectedItem();
         
-        Knjiga novaKnjiga = new Knjiga(naziv, odabraniAutor, isbn, godIzdanja, zanr);
+        Random rand = new Random();
+        int id = 101 + rand.nextInt(Integer.MAX_VALUE - 100);
         
+        Knjiga novaKnjiga = new Knjiga(id,naziv, odabraniAutor, isbn, godIzdanja, zanr);
         
         kontroler.dodajKnjigu(novaKnjiga); // Controller.getInstance().dodajKnjigu(novaKnjiga)
         gf.osveziTabelu();
@@ -214,6 +223,9 @@ public class FormaKnjiga extends javax.swing.JDialog {
         knjigaZaIzmenu.setGodinaIzdanja(godIzdanja);
         knjigaZaIzmenu.setNaslov(naziv);
         knjigaZaIzmenu.setZanr(zanr);
+        
+        kontroler.azurirajKnjigu(knjigaZaIzmenu);
+        
         gf.osveziTabelu();
          JOptionPane.showMessageDialog(this, "Knjiga je uspesno izmenjena! ","Uspesno",JOptionPane.INFORMATION_MESSAGE);
             
@@ -223,6 +235,10 @@ public class FormaKnjiga extends javax.swing.JDialog {
         
         
     }//GEN-LAST:event_jButtonIzmeniActionPerformed
+
+    private void jComboBoxAutoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAutoriActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxAutoriActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,7 +264,8 @@ public class FormaKnjiga extends javax.swing.JDialog {
     
     private void popuniComboBoxAutorima() {
         jComboBoxAutori.removeAllItems();
-        List<Autor> autori = kontroler.getListaAutora();
+        //List<Autor> autori = kontroler.getListaAutora();
+        List<Autor> autori = Controller.getInstance().ucitajListuAutoraIzBaze();
         for (Autor autor : autori) {
             jComboBoxAutori.addItem(autor);
         }
